@@ -1,16 +1,21 @@
 document.addEventListener('DOMContentLoaded', function(){
     let nameOfFilms = [],
-        ratingOfFilms = []; 
+        ratingOfFilms = [],
+        questName =  "Один из последних просмотренных фильмов?",
+        questRating = "На сколько оцените его?",
+        i,
+        ganre = [],
+        numberOfFilms;
 
-    let numberOfFilms = prompt("Один из последних просмотренных фильмов?","");
 
-    nameOfFilms[0] = prompt("Один из последних просмотренных фильмов?","");
-    ratingOfFilms[0] = prompt("На сколько оцените его?","");
+    function start(){
+        numberOfFilms = +prompt("Сколько просмотренных фильмов?","");
+        while(!numberOfFilms || isNaN(numberOfFilms)){
+            numberOfFilms = +prompt("Сколько просмотренных фильмов?","");
+        }
+    }
     
-    nameOfFilms[1] = prompt("Один из последних просмотренных фильмов?","");
-    ratingOfFilms[1] = prompt("На сколько оцените его?","");
-    
-    // let movie = {};
+    start();
 
     let personalMovieDB = {
         count: numberOfFilms,
@@ -20,22 +25,55 @@ document.addEventListener('DOMContentLoaded', function(){
         privat: false
     };
 
-
-    for(let i = 0; i < nameOfFilms.length; i++){
+    
+    
+function rememberMyFilms(){
+    for(i = 0; i < 2; i++){
+        nameOfFilms[i] = prompt(questName,"");
+        while (!nameOfFilms[i] || nameOfFilms[i].length > 50){
+            nameOfFilms[i] = prompt(questName,"");
+        }
+        ratingOfFilms[i] = prompt(questRating,"");
+        while (!ratingOfFilms[i] || ratingOfFilms[i].length > 50){
+            ratingOfFilms[i] = prompt(questRating,"");
+        }         
         personalMovieDB.movies[nameOfFilms[i]] = ratingOfFilms[i];
-    };
+    }
+}
 
-    console.log(personalMovieDB);
+// rememberMyFilms();
 
+function detectMyLevel(){
+    if (personalMovieDB.count < 10){
+        alert('плохой киноман');
+    }
+    else{
+        alert('хороший киноман');
+    }
+}
+// detectMyLevel();
 
-    // console.log(numberOfFilms);
+function writeYourGanres(){
+    for(i=0;i<3;i++){
+        ganre = prompt(`Ваш любимый жанр под номером ${i+1} ?`,"");
+        while (!ganre || ganre == null){
+            ganre = prompt(`Ваш любимый жанр под номером ${i+1} ?`,"");
+        }        
+        personalMovieDB.ganres[i] = ganre;
+    }
+}
 
+writeYourGanres();
 
+function showMyBD(private){
+    if(private == false){
+        console.log('private = false, because : ');
+        console.log(personalMovieDB);
+    }else{
+        console.log('private = false, because : BIBA22 ');
+    }  
+}
 
-   
-
-
-
-
+showMyBD(personalMovieDB.privat);
 
 });
